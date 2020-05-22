@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config');
 const { CLIENT_ORIGIN } = require('./config');
 const usersRouter = require('./users/users-router');
 const authRouter = require('./auth/auth-router');
+const contestsRouter = require('./contests/contests-router');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/contests', contestsRouter);
 
 app.use((error, req, res, next) => {
   let response;
