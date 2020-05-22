@@ -6,7 +6,7 @@ const users = [
     first_name: 'Bob',
     last_name: 'Smith',
     email_address: 'bsmith@company.com',
-    password: '$2y$12$Ydp5yv6NbV..wkvIwc3elemQAxy5JZSPUFUf/v3fy5f2FGMJt8VJO',
+    password: '$2y$12$HuFCqlwWMFqJSrKd/syl7uGH9njkmY0SUVYG2jTQ74irvNrTHhuTG',
     confirmed_account: true,
     date_created: '2002-01-22T16:28:32.615Z',
   },
@@ -94,6 +94,29 @@ const patchUser = {
   email_address: 'bobsmithz@company.com',
 };
 
+const authRequestNoPassword = {
+  email_address: 'bsmith@company.com',
+};
+
+const authRequestNoUsername = {
+  password: 'apassword',
+};
+
+const authRequestFakeUsername = {
+  email_address: 'noone@youngliving.com',
+  password: 'nothing',
+};
+
+const authRequestIncorrectPassword = {
+  email_address: 'maxratto@company.com',
+  password: 'nothing',
+};
+
+const authRequestValidLogin = {
+  email_address: 'bsmith@company.com',
+  password: 'smith',
+};
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -130,4 +153,9 @@ module.exports = {
   newMaliciousUser,
   newValidUser,
   patchUser,
+  authRequestNoPassword,
+  authRequestNoUsername,
+  authRequestFakeUsername,
+  authRequestIncorrectPassword,
+  authRequestValidLogin,
 };

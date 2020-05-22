@@ -11,7 +11,7 @@ authRouter
     const loginUser = { email_address, password };
     const knexInstance = req.app.get('db');
 
-    for (const [value] of Object.entries(loginUser)) {
+    for (const [key, value] of Object.entries(loginUser)) {
       if (value == null) {
         res.status(400).json({
           error: {
@@ -24,7 +24,7 @@ authRouter
     AuthService.getUser(knexInstance, loginUser.email_address)
       .then((dbUser) => {
         if (!dbUser) {
-          res.status(400).json({
+          res.status(404).json({
             error: {
               message: 'incorrect username or password',
             },
@@ -33,7 +33,7 @@ authRouter
         return AuthService.comparePasswords(loginUser.password, dbUser.password)
           .then((compareMatch) => {
             if (!compareMatch) {
-              res.status(400).json({
+              res.status(404).json({
                 error: {
                   message: 'incorrect username or password',
                 },
