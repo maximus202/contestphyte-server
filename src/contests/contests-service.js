@@ -9,6 +9,7 @@ const ContestsService = {
     return knex
       .select('*')
       .where('id', contest)
+      .where('owner_id', user)
       .from('contestphyte_contests');
   },
   insertNewContest(knex, newContest) {
@@ -26,11 +27,14 @@ const ContestsService = {
       .returning('*')
       .then((row) => row[0]);
   },
-  deleteContest(knex, contestId) {
+  deleteContest(knex, user, contestId) {
     return knex
       .from('contestphyte_contests')
+      .where('owner_id', user)
       .where('id', contestId)
-      .delete();
+      .delete()
+      .returning('*')
+      .then((row) => row[0]);
   },
 };
 

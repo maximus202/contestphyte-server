@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const users = [
   {
@@ -117,6 +118,80 @@ const authRequestValidLogin = {
   password: 'smith',
 };
 
+const authRequestValidLoginAsSallyField = {
+  email_address: 'sfield@company.com',
+  password: 'sfield',
+};
+
+const contests = [
+  {
+    is_active: true,
+    owner_id: '1',
+    company_name: 'Test',
+    company_url: 'www.test.com',
+    company_email: 'test@test.com',
+    contest_name: 'contest test',
+    image_url: 'contestimage.com',
+    contest_description: 'contest_description',
+    prize_value: '300',
+    official_rules_url: 'contestrules.com',
+    business_mailing_address: '1038 West 29 North',
+    business_state: 'Utah',
+    business_zip_code: '84606',
+    end_datetime: '2020-06-12T19:30',
+  },
+];
+
+const maliciousContest = [{
+  is_active: true,
+  owner_id: '1',
+  company_name: 'Test <script>alert("xss");</script>',
+  company_url: 'www.test.com',
+  company_email: 'test@test.com',
+  contest_name: 'contest test <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> ',
+  image_url: 'contestimage.com',
+  contest_description: 'contest_description',
+  prize_value: '300',
+  official_rules_url: 'contestrules.com',
+  business_mailing_address: '1038 West 29 North',
+  business_state: 'Utah',
+  business_zip_code: '84606',
+  end_datetime: '2020-06-12T19:30',
+}];
+
+const sanitizedContest = {
+  company_name: 'Test &lt;script&gt;alert("xss");&lt;/script&gt;',
+};
+
+const newContestMissingField = {
+  company_url: 'www.test.com',
+  company_email: 'test@test.com',
+  contest_name: 'contest test',
+  image_url: 'contestimage.com',
+  contest_description: 'contest_description',
+  prize_value: '300',
+  official_rules_url: 'contestrules.com',
+  business_mailing_address: '1038 West 29 North',
+  business_state: 'Utah',
+  business_zip_code: '84606',
+  end_datetime: '2020-06-12T19:30',
+};
+
+const newValidContest = {
+  company_name: 'Test',
+  company_url: 'www.test.com',
+  company_email: 'test@test.com',
+  contest_name: 'contest test',
+  image_url: 'contestimage.com',
+  contest_description: 'contest_description',
+  prize_value: '300',
+  official_rules_url: 'contestrules.com',
+  business_mailing_address: '1038 West 29 North',
+  business_state: 'Utah',
+  business_zip_code: '84606',
+  end_datetime: '2020-06-12T19:30',
+};
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -139,6 +214,23 @@ function seedMaliciousUser(db) {
     .insert(maliciousUser);
 }
 
+function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  const token = jwt.sign({ id: user.id }, secret, { subject: user.email_address, algorithm: 'HS256' });
+  return `bearer ${token}`;
+}
+
+function seedContestsTable(db) {
+  return db
+    .into('contestphyte_contests')
+    .insert(contests);
+}
+
+function seedMaliciousContest(db) {
+  return db
+    .into('contestphyte_contests')
+    .insert(maliciousContest);
+}
+
 module.exports = {
   users,
   maliciousUser,
@@ -158,4 +250,12 @@ module.exports = {
   authRequestFakeUsername,
   authRequestIncorrectPassword,
   authRequestValidLogin,
+  makeAuthHeader,
+  seedContestsTable,
+  contests,
+  seedMaliciousContest,
+  sanitizedContest,
+  newContestMissingField,
+  newValidContest,
+  authRequestValidLoginAsSallyField,
 };

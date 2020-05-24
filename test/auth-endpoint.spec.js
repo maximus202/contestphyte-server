@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect3472 } = require('chai');
 const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');

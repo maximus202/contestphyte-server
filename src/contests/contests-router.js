@@ -82,6 +82,13 @@ contestRouter
     const contest = req.params.contest_id;
     ContestsService.getContestById(knexInstance, user, contest)
       .then((row) => {
+        if (row.length === 0) {
+          return res.status(404).json({
+            error: {
+              message: 'Contest not found',
+            },
+          });
+        }
         res.json(row.map(seralizeContest));
       })
       .catch(next);
@@ -127,11 +134,22 @@ contestRouter
   })
   .delete((req, res, next) => {
     const knexInstance = req.app.get('db');
+    const user = req.user_id;
     const contest = req.params.contest_id;
-    ContestsService.deleteContest(knexInstance, contest)
+
+    ContestsService.getContestById(knexInstance, user, contest)
       .then((row) => {
-        res.status(204).end();
-      })
+        if (row.length === 0) {
+          return res.status(404).json({
+            error: {
+              message: 'contest not found',
+            },
+          });
+        }
+      });
+
+    ContestsService.deleteContest(knexInstance, user, contest)
+      .then(() => res.status(204).end())
       .catch(next);
   });
 
