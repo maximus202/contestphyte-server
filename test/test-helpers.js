@@ -7,7 +7,7 @@ const users = [
     first_name: 'Bob',
     last_name: 'Smith',
     email_address: 'bsmith@company.com',
-    password: '$2y$12$HuFCqlwWMFqJSrKd/syl7uGH9njkmY0SUVYG2jTQ74irvNrTHhuTG',
+    password: '$2y$12$DcBqcNuhmWspTwpkxPvpN.YARBTlETTHULgzILVbocwYUz9j3.haW',
     confirmed_account: true,
     date_created: '2002-01-22T16:28:32.615Z',
   },
@@ -115,7 +115,7 @@ const authRequestIncorrectPassword = {
 
 const authRequestValidLogin = {
   email_address: 'bsmith@company.com',
-  password: 'smith',
+  password: 'bsmith',
 };
 
 const authRequestValidLoginAsSallyField = {
@@ -192,6 +192,81 @@ const newValidContest = {
   end_datetime: '2020-06-12T19:30',
 };
 
+const participants = [
+  {
+    id: 1,
+    contest_id: 1,
+    first_name: 'participant 1 first',
+    last_name: 'participant 1 last',
+    email_address: 'participant1@gmail.com',
+  },
+  {
+    id: 2,
+    referrer_id: 1,
+    contest_id: 1,
+    first_name: 'participant 2 first',
+    last_name: 'participant 2 last',
+    email_address: 'participant2@gmail.com',
+  },
+];
+
+const newParticipantNoContest = {
+  referrer_id: 1,
+  first_name: 'new participant first name',
+  last_name: 'new participant last name',
+  email_address: 'sdawerasef@gmail.com',
+};
+
+const newParticipantDupEmail = {
+  referrer_id: 1,
+  contest_id: 1,
+  first_name: 'new participant first name',
+  last_name: 'new participant last name',
+  email_address: 'participant2@gmail.com',
+};
+
+const newParticipantNoReferrer = {
+  contest_id: 1,
+  first_name: 'new participant first name',
+  last_name: 'new participant last name',
+  email_address: '2894yanhsdkfjasd@gmail.com',
+};
+
+const newParticipantWithReferrer = {
+  referrer_id: 1,
+  contest_id: 1,
+  first_name: 'new participant first name',
+  last_name: 'new participant last name',
+  email_address: '2894yanhsdkfjasd@gmail.com',
+};
+
+const maliciousParticipant = {
+  id: 1,
+  referrer_id: 1,
+  contest_id: 1,
+  first_name: 'Test <script>alert("xss");</script>',
+  last_name: 'contest test <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong>',
+  email_address: '2894yanhsdkfjasd@gmail.com',
+};
+
+const newMaliciousParticipant = {
+  referrer_id: 1,
+  contest_id: 1,
+  first_name: 'Test <script>alert("xss");</script>',
+  last_name: 'contest test <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong>',
+  email_address: '2894yanhsdkfjasd@gmail.com',
+};
+
+const sanitizedParticipant = {
+  referrer_id: '1',
+  is_confirmed: false,
+  first_name: 'Test &lt;script&gt;alert("xss");&lt;/script&gt;',
+  last_name: 'contest test <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong>',
+  email_address: '2894yanhsdkfjasd@gmail.com',
+  number_of_referrals: null,
+  number_of_entries: null,
+};
+
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -231,6 +306,18 @@ function seedMaliciousContest(db) {
     .insert(maliciousContest);
 }
 
+function seedParticipantsTable(db) {
+  return db
+    .into('contestphyte_participants')
+    .insert(participants);
+}
+
+function seedMaliciousParticipant(db) {
+  return db
+    .into('contestphyte_participants')
+    .insert(maliciousParticipant);
+}
+
 module.exports = {
   users,
   maliciousUser,
@@ -258,4 +345,14 @@ module.exports = {
   newContestMissingField,
   newValidContest,
   authRequestValidLoginAsSallyField,
+  seedParticipantsTable,
+  participants,
+  newParticipantDupEmail,
+  newParticipantNoContest,
+  newParticipantWithReferrer,
+  newParticipantNoReferrer,
+  maliciousParticipant,
+  seedMaliciousParticipant,
+  sanitizedParticipant,
+  newMaliciousParticipant,
 };

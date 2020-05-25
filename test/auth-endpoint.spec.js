@@ -75,8 +75,8 @@ describe('Auth endpoints', () => {
       it('responds with 200 and returns token', () => supertest(app)
         .post('/api/auth/login')
         .send(helpers.authRequestValidLogin)
-        .expect(200));
-      // .then((res) => console.log(res.body)));
+        .expect(200)
+        .then((res) => console.log(res.body)));
     });
   });
 });
