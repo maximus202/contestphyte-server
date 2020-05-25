@@ -31,6 +31,18 @@ describe('contests endpoint', () => {
         }));
     });
 
+    context('given no contest exists for user', () => {
+      beforeEach('insert users in db', () => helpers.seedUsersTable(db));
+      it('responds with 401', () => supertest(app)
+        .get('/api/contests')
+        .set('Authorization', helpers.makeAuthHeader(helpers.authRequestValidLoginAsSallyField))
+        .expect(404), {
+        error: {
+          message: 'no contests found',
+        },
+      });
+    });
+
     context('given valid request', () => {
       beforeEach('insert users in db', () => helpers.seedUsersTable(db));
       beforeEach('insert contests in db', () => helpers.seedContestsTable(db));
@@ -58,6 +70,18 @@ describe('contests endpoint', () => {
 
   describe('POST /api/contests/', () => {
     beforeEach('insert users in db', () => helpers.seedUsersTable(db));
+
+    context('given no bearer token', () => {
+      it('responds with 401 and error', () => supertest(app)
+        .get('/api/contests')
+        .send(helpers.newValidContest)
+        .expect(401), {
+        error: {
+          message: 'missing bearer token',
+        },
+      });
+    });
+
     context('given a value is missing in the body', () => {
       it('responds with 400 and error message', () => supertest(app)
         .post('/api/contests/')

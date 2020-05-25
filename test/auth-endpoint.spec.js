@@ -1,4 +1,4 @@
-const { expect3472 } = require('chai');
+const { expect } = require('chai');
 const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
@@ -69,14 +69,6 @@ describe('Auth endpoints', () => {
           message: 'incorrect username or password',
         },
       });
-    });
-
-    context('given username and password is correct', () => {
-      it('responds with 200 and returns token', () => supertest(app)
-        .post('/api/auth/login')
-        .send(helpers.authRequestValidLogin)
-        .expect(200)
-        .then((res) => console.log(res.body)));
     });
   });
 });

@@ -32,6 +32,13 @@ contestRouter
     const user = req.user_id;
     ContestsService.getContestsByUser(knexInstance, user)
       .then((contests) => {
+        if (contests.length === 0) {
+          return res.status(404).json({
+            error: {
+              message: 'no contests found',
+            },
+          });
+        }
         res.json(contests.map(seralizeContest));
       })
       .catch(next);
