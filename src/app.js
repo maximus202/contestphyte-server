@@ -8,6 +8,7 @@ const { CLIENT_ORIGIN } = require('./config');
 const usersRouter = require('./users/users-router');
 const authRouter = require('./auth/auth-router');
 const contestsRouter = require('./contests/contests-router');
+const participantsRouter = require('./participants/participants-router');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/contests', contestsRouter);
+app.use('/api/participants', participantsRouter);
 
 app.use((error, req, res, next) => {
   let response;
