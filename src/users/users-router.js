@@ -29,7 +29,6 @@ usersRouter
     const newUser = {
       first_name, last_name, email_address, password,
     };
-    console.log(newUser);
 
     for (const [key, value] of Object.entries(newUser)) {
       if (value == null) {
@@ -42,10 +41,8 @@ usersRouter
     }
 
     const knexInstance = req.app.get('db');
-    console.log(knexInstance);
     UsersService.insertNewUser(knexInstance, newUser)
       .then((user) => {
-        console.log(user);
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${user.id}`))
