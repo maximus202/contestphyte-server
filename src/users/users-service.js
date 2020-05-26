@@ -16,6 +16,7 @@ const UsersService = {
       .first();
   },
   insertNewUser(knex, newUser) {
+    console.log('trigger');
     return hashPassword(newUser.password)
       .then((hash) => knex
         .insert({
