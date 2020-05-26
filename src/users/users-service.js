@@ -24,7 +24,7 @@ const UsersService = {
           password: hash,
         })
         .into('contestphyte_users')
-        .returning('*')
+        .returning('*'));
   },
   updateUser(knex, id, updatedUser) {
     return knex('contestphyte_users')
