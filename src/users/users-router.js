@@ -43,7 +43,6 @@ usersRouter
     const knexInstance = req.app.get('db');
     UsersService.insertNewUser(knexInstance, newUser)
       .then((user) => {
-        console.log('user', user);
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${user.id}`))

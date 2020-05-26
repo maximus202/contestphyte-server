@@ -25,7 +25,7 @@ const UsersService = {
         })
         .into('contestphyte_users')
         .returning('*')
-        .then((row) => console.log(row)));
+        .then((row) => console.log('row', row)));
   },
   updateUser(knex, id, updatedUser) {
     return knex('contestphyte_users')
