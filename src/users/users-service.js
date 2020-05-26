@@ -25,7 +25,7 @@ const UsersService = {
         })
         .into('contestphyte_users')
         .returning('*')
-        .then(console.log(hash))
+        .then((rows) => console.log(rows[0]))
         .then((rows) => rows[0]));
   },
   updateUser(knex, id, updatedUser) {
