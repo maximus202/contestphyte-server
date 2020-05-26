@@ -41,6 +41,7 @@ usersRouter
     }
 
     const knexInstance = req.app.get('db');
+    console.log(knexInstance);
     UsersService.insertNewUser(knexInstance, newUser)
       .then((user) => {
         console.log(user);
