@@ -28,7 +28,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/contests', contestsRouter);
 app.use('/api/participants', participantsRouter);
 
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
   let response;
   if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } };
