@@ -11,11 +11,6 @@ const participantsRouter = require('./participants/participants-router');
 
 const app = express();
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
-
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
   : 'common';
