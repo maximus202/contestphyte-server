@@ -16,7 +16,7 @@ const UsersService = {
       .first();
   },
   insertNewUser(knex, newUser) {
-    console.log('trigger');
+    console.log('knex', knex);
     return hashPassword(newUser.password)
       .then((hash) => knex
         .insert({
@@ -25,7 +25,7 @@ const UsersService = {
         })
         .into('contestphyte_users')
         .returning('*')
-        .then((rows) => console.log(rows[0]))
+        .then((rows) => console.log('row', rows[0]))
         .then((rows) => rows[0]));
   },
   updateUser(knex, id, updatedUser) {
