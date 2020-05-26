@@ -29,6 +29,7 @@ usersRouter
     const newUser = {
       first_name, last_name, email_address, password,
     };
+    console.log(newUser);
 
     for (const [key, value] of Object.entries(newUser)) {
       if (value == null) {
