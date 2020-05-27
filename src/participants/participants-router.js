@@ -10,6 +10,7 @@ const jsonParser = express.json();
 
 const serializeParticipants = (participant) => ({
   id: participant.id,
+  contest_id: participant.contest_id,
   referrer_id: xss(participant.referrer_id),
   is_confirmed: participant.is_confirmed,
   first_name: xss(participant.first_name),
