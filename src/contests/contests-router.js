@@ -8,6 +8,7 @@ const contestRouter = express.Router();
 const jsonParser = express.json();
 
 const seralizeContest = (contest) => ({
+  id: contest.id,
   is_active: contest.is_active,
   company_name: xss(contest.company_name),
   company_url: xss(contest.company_url),
