@@ -5,6 +5,12 @@ const ParticipantsService = {
       .where('contest_id', contest)
       .from('contestphyte_participants');
   },
+  getParticipantById(knex, participantId) {
+    return knex
+      .select('*')
+      .where('id', participantId)
+      .from('contestphyte_participants');
+  },
   checkDuplicateEmail(knex, email, contest) {
     return knex
       .select('*')
