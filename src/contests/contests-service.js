@@ -12,6 +12,12 @@ const ContestsService = {
       .where('owner_id', user)
       .from('contestphyte_contests');
   },
+  getPublicContest(knex, contest) {
+    return knex
+      .select('*')
+      .where('id', contest)
+      .from('contestphyte_contests');
+  },
   insertNewContest(knex, newContest) {
     return knex
       .insert(newContest)

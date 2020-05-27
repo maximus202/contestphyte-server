@@ -25,6 +25,20 @@ const seralizeContest = (contest) => ({
   impressions: contest.impressions,
 });
 
+const publicSerializeContest = (contest) => ({
+  id: contest.id,
+  is_active: contest.is_active,
+  contest_name: xss(contest.contest_name),
+  company_name: xss(contest.company_name),
+  company_url: xss(contest.company_url),
+  image_url: xss(contest.image_url),
+  contest_description: xss(contest.contest_description),
+  official_rules_url: xss(contest.official_rules_url),
+  end_datetime: xss(contest.end_datetime),
+  company_email: xss(contest.company_email),
+  prize_value: xss(contest.prize_value),
+});
+
 contestRouter
   .route('/')
   .all(requireAuth)
@@ -78,6 +92,25 @@ contestRouter
         .status(201)
         .location(path.posix.join(req.originalUrl, `/${contest.id}`))
         .json(seralizeContest(contest)))
+      .catch(next);
+  });
+
+contestRouter
+  .route('/public/landing/:contest_id')
+  .get((req, res, next) => {
+    const knexInstance = req.app.get('db');
+    const contest = req.params.contest_id;
+    ContestsService.getPublicContest(knexInstance, contest)
+      .then((row) => {
+        if (row.length === 0) {
+          return res.status(404).json({
+            error: {
+              message: 'Contest not found',
+            },
+          });
+        }
+        res.json(row.map(publicSerializeContest));
+      })
       .catch(next);
   });
 
