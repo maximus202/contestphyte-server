@@ -17,7 +17,7 @@ const ContestsService = {
       .insert(newContest)
       .into('contestphyte_contests')
       .returning('*')
-      .then((row) => console.log(row[0]));
+      .then((row) => row[0]);
   },
   updateContest(knex, updateContest, contestId) {
     return knex
