@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const express = require('express');
 const AuthService = require('./auth-service');
 
@@ -11,7 +14,7 @@ authRouter
     const loginUser = { email_address, password };
     const knexInstance = req.app.get('db');
 
-    for (const [key, value] of Object.entries(loginUser)) {
+    for (const [value] of Object.entries(loginUser)) {
       if (value == null) {
         res.status(400).json({
           error: {

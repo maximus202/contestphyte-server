@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const users = [
@@ -43,7 +42,7 @@ const maliciousUser = [{
 
 const sanitizedMaliciousUser = [{
   id: 1,
-  first_name: 'Malicious first name &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+  first_name: 'Malicious first name &lt;script&gt;alert("xss");&lt;/script&gt;',
   last_name: 'Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.',
   email_address: 'baddie@company.com',
   password: '$2y$12$5Hz/RcGlvQ4ucZyM2U.s0.e4VVbrfphWISUPBB8O0Uxq7aGptOzZa',

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const { expect } = require('chai');
 const knex = require('knex');
 const app = require('../src/app');
@@ -109,7 +111,8 @@ describe('contests endpoint', () => {
           expect(res.body.contest_description).to.eql(helpers.newValidContest.contest_description);
           expect(res.body.prize_value).to.eql(helpers.newValidContest.prize_value);
           expect(res.body.official_rules_url).to.eql(helpers.newValidContest.official_rules_url);
-          expect(res.body.business_mailing_address).to.eql(helpers.newValidContest.business_mailing_address);
+          expect(res.body.business_mailing_address)
+            .to.eql(helpers.newValidContest.business_mailing_address);
           expect(res.body.business_state).to.eql(helpers.newValidContest.business_state);
           expect(res.body.business_zip_code).to.eql(helpers.newValidContest.business_zip_code);
         }));

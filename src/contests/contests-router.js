@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const path = require('path');
 const express = require('express');
 const xss = require('xss');
@@ -154,7 +157,7 @@ contestRouter
     };
     const contestId = req.params.contest_id;
 
-    for (const [key, value] of Object.entries(updateContest)) {
+    for (const [value] of Object.entries(updateContest)) {
       if (value == null) {
         return res
           .status(400)

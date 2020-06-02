@@ -1,4 +1,6 @@
-const path = require('path');
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const express = require('express');
 const xss = require('xss');
 const ParticipantsService = require('./participants-service');
@@ -106,7 +108,12 @@ participantsRouter
               const referrer = createdParticipant.referrer_id;
               const referralAmount = 1;
               const rewardAmount = 10;
-              ParticipantsService.rewardReferrer(knexInstance, referrer, referralAmount, rewardAmount);
+              ParticipantsService.rewardReferrer(
+                knexInstance,
+                referrer,
+                referralAmount,
+                rewardAmount,
+              );
             }
           })
           .catch(next);

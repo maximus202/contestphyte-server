@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const path = require('path');
 const express = require('express');
 const xss = require('xss');

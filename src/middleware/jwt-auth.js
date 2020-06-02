@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const AuthService = require('../auth/auth-service');
 
 function requireAuth(req, res, next) {
