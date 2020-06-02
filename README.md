@@ -21,13 +21,15 @@ Gets all contests owned by the user based off the JWT token.
 Posts a new contest campaign with user in the JWT token listed as the production owner.
 
 Request body must include:
+- "owner_id": integer (references the id in api token)
+- "is_active": true
 - "company_name": string
 - "company_url": string in url format
 - "company_email": string in email address format
 - "image_url": string in url format
 - "contest_description": string
 - "prize_value": integer
-- "official_rules_url": string in url
+- "official_rules_url": string in url format
 - "business_mailing_address": string
 - "business_state": string of valid U.S. state written out (Ex: California)
 - "business_zip_code": integer
@@ -53,6 +55,12 @@ Gets data for a certain participant by participant id.
 
 ### POST /api/participants/new/{contestId}
 Posts a new participant in a contest by contest id. 
+
+Request body must include:
+- "contest_id": integer for a contest id that is existing
+- "first_name": string
+- "last_name": string
+- "email_address": string in email format
 
 ## Scripts
 - Start application for development: `npm run dev`
